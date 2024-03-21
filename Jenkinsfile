@@ -50,8 +50,24 @@ stage("Sonarqube Analysis "){
                 sh "trivy fs . > trivyfs.txt"
             }
         }
-
+        stage("Docker Build & Push"){
+            steps{
+                script{
+                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
+                       sh "docker build --build-arg TMDB_V3_API_KEY=136212add169a2f0ec505aad8dbe4975 -t netflix ."
+                       sh "docker tag netflix madderlasandhya/netflix:latest "
+                       sh "docker push madderlasandhya/netflix:latest "
+                    }
+                }
+            }
                       }
+                     stage("TRIVY"){
+            steps{
+                sh "trivy image mounica52/netflix:latest > trivyimage.txt"
+            }
+        }
+              }
+ 
          post{
                 always {
                  emailext attachLog: true,
