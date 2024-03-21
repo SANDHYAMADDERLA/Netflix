@@ -39,6 +39,5 @@ stage("Sonarqube Analysis "){
                 sh "npm install"
             }
         }
-
               }
 }
