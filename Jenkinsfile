@@ -66,9 +66,14 @@ stage("Sonarqube Analysis "){
                 sh "trivy image madderlasandhya/netflix:latest > trivyimage.txt"
             }
         }
+        stage('Deploy to container'){
+            steps{
+                sh 'docker run -d --name netflix -p 8081:80 madderlasandhya/netflix:latest'
+            }
+        }
               }
- 
-         post{
+
+          post{
                 always {
                  emailext attachLog: true,
                  subject: "'${currentBuild.result}'",
