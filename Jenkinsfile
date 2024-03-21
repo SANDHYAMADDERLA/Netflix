@@ -63,7 +63,7 @@ stage("Sonarqube Analysis "){
                       }
                      stage("TRIVY"){
             steps{
-                sh "trivy image mounica52/netflix:latest > trivyimage.txt"
+                sh "trivy image madderlasandhya/netflix:latest > trivyimage.txt"
             }
         }
               }
